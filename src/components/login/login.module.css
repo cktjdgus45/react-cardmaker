@@ -1,4 +1,4 @@
-@value makerGreen,makerLightPink,makerWhite from '../../common/colors.css';
+@value makerGreen,makerLightPink,makerWhite,makerLightPink from '../../common/colors.css';
 
 .login{
     width: 500px;
@@ -29,4 +29,8 @@
     border-radius: 1.2rem;
     border: 0.2rem solid makerGreen;
     outline: none;
+}
+
+.button:hover{
+    background-color: makerLightPink;
 }

@@ -4,6 +4,8 @@ import {
     signInWithPopup,
     GoogleAuthProvider,
     GithubAuthProvider,
+    onAuthStateChanged,
+    signOut,
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -15,6 +17,7 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 
+const auth = getAuth();
 class AuthService {
     login(providerName) {
         let provider;
@@ -23,6 +26,16 @@ class AuthService {
         const auth = getAuth()
         return signInWithPopup(auth, provider)
     }
+
+    logout() {
+        signOut(auth);
+    }
+    onAuthChange(onUserChanged) {
+        onAuthStateChanged(auth, (user) => {
+            onUserChanged(user);
+        });
+    }
 }
+
 
 export default AuthService;
