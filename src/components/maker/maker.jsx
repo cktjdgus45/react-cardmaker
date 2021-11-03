@@ -7,8 +7,8 @@ import Preview from '../preview/preview';
 import styles from './maker.module.css';
 
 const Maker = ({ authService }) => {
-    const [cards, setCards] = useState([
-        {
+    const [cards, setCards] = useState({
+        '1': {
             id: '1',
             name: 'paul',
             company: 'Naver',
@@ -19,7 +19,7 @@ const Maker = ({ authService }) => {
             fileName: 'paul',
             fileUrl: ''
         },
-        {
+        '2': {
             id: '2',
             name: 'alsa',
             company: 'kakao',
@@ -30,7 +30,7 @@ const Maker = ({ authService }) => {
             fileName: 'paulasd',
             fileUrl: ''
         },
-        {
+        '3': {
             id: '3',
             name: 'dwein',
             company: 'Samsung',
@@ -41,14 +41,25 @@ const Maker = ({ authService }) => {
             fileName: 'paulqwe',
             fileUrl: ''
         },
-    ])
+    })
     const history = useHistory();
     const onLogout = () => {
         authService.logout();
     }
-    const addCard = (card) => {
-        const updated = [...cards, card];
-        setCards(updated);
+
+    const createOrUpdateCard = (card) => {
+        setCards(cards => {
+            const updated = { ...cards };
+            updated[card.id] = card;
+            return updated;
+        })
+    }
+    const deleteCard = (card) => {
+        setCards(cards => {
+            const updated = { ...cards };
+            delete updated[card.id];
+            return updated;
+        })
     }
 
     useEffect(() => {
@@ -64,7 +75,7 @@ const Maker = ({ authService }) => {
         <section className={styles.maker}>
             <Header onLogout={onLogout}></Header>
             <div className={styles.container}>
-                <Editor cards={cards} addCard={addCard}></Editor>
+                <Editor cards={cards} addCard={createOrUpdateCard} updatedCard={createOrUpdateCard} deleteCard={deleteCard}></Editor>
                 <Preview cards={cards}></Preview>
             </div>
             <Footer></Footer>
