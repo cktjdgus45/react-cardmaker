@@ -6,7 +6,7 @@ import Header from '../header/header';
 import Preview from '../preview/preview';
 import styles from './maker.module.css';
 
-const Maker = ({ authService }) => {
+const Maker = ({ authService, FileInput }) => {
     const [cards, setCards] = useState({
         '1': {
             id: '1',
@@ -16,7 +16,7 @@ const Maker = ({ authService }) => {
             title: 'software Engineer',
             email: 'cktjdgus45@naver.com',
             message: 'try again',
-            fileName: 'paul',
+            fileName: 'fileName1',
             fileUrl: ''
         },
         '2': {
@@ -27,7 +27,7 @@ const Maker = ({ authService }) => {
             title: 'software Engineer',
             email: 'cktjdgus12@naver.com',
             message: 'try again never give up',
-            fileName: 'paulasd',
+            fileName: 'fileName2',
             fileUrl: ''
         },
         '3': {
@@ -38,7 +38,7 @@ const Maker = ({ authService }) => {
             title: 'software Engineer',
             email: 'cktjdgus97@naver.com',
             message: 'try do again',
-            fileName: 'paulqwe',
+            fileName: 'fileName3',
             fileUrl: ''
         },
     })
@@ -75,7 +75,11 @@ const Maker = ({ authService }) => {
         <section className={styles.maker}>
             <Header onLogout={onLogout}></Header>
             <div className={styles.container}>
-                <Editor cards={cards} addCard={createOrUpdateCard} updatedCard={createOrUpdateCard} deleteCard={deleteCard}></Editor>
+                <Editor FileInput={FileInput}
+                    cards={cards}
+                    addCard={createOrUpdateCard}
+                    updatedCard={createOrUpdateCard}
+                    deleteCard={deleteCard}></Editor>
                 <Preview cards={cards}></Preview>
             </div>
             <Footer></Footer>

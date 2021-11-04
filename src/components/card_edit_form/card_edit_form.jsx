@@ -1,15 +1,22 @@
 import React from 'react';
 import Button from '../button/button';
-import ImageFileInput from '../image_file_input.jsx/image_file_input';
 import styles from './card_edit_form.module.css';
 
-const CardEditForm = ({ card, updatedCard, deleteCard }) => {
+const CardEditForm = ({ FileInput, card, updatedCard, deleteCard }) => {
     const { name, company, theme, title, email, message, fileName, fileUrl } = card;
     const onSubmit = () => {
         deleteCard(card);
     };
+
+    const onFileChange = file => {
+        updatedCard({
+            ...card,
+            fileName: file.name,
+            fileUrl: file.url
+        })
+    }
+
     const onChange = (event) => {
-        console.log(event)
         if (event.target == null) {
             return;
         }
@@ -32,7 +39,7 @@ const CardEditForm = ({ card, updatedCard, deleteCard }) => {
                 name="company"
                 value={company}
                 onChange={onChange} />
-            <select className={styles.select} name="theme" value={theme}>
+            <select className={styles.select} name="theme" value={theme} onChange={onChange}>
                 <option value="light">Light</option>
                 <option value="dark">Dark</option>
                 <option value="colorful">Colorful</option>
@@ -46,9 +53,9 @@ const CardEditForm = ({ card, updatedCard, deleteCard }) => {
                 name="email"
                 value={email}
                 onChange={onChange} />
-            <textarea name="message" className={styles.textarea} value={message}></textarea>
+            <textarea name="message" className={styles.textarea} value={message} onChange={onChange}></textarea>
             <div className={styles.fileInput}>
-                <ImageFileInput></ImageFileInput>
+                <FileInput name={fileName} onFileChange={onFileChange}></FileInput>
             </div>
             <Button className={styles.button} name='delete' onClick={onSubmit}></Button>
         </form>
