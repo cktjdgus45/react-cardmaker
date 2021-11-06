@@ -6,7 +6,10 @@ import Header from '../header/header';
 import Preview from '../preview/preview';
 import styles from './maker.module.css';
 
-const Maker = ({ authService, FileInput }) => {
+const Maker = ({ authService, FileInput, CardRepository }) => {
+    const history = useHistory();
+    const historyState = history?.location?.state;
+    const [userId, setUserId] = useState(historyState && historyState.id);
     const [cards, setCards] = useState({
         '1': {
             id: '1',
@@ -42,7 +45,6 @@ const Maker = ({ authService, FileInput }) => {
             fileUrl: ''
         },
     })
-    const history = useHistory();
     const onLogout = () => {
         authService.logout();
     }
@@ -53,6 +55,7 @@ const Maker = ({ authService, FileInput }) => {
             updated[card.id] = card;
             return updated;
         })
+        CardRepository.saveCard(userId, card);
     }
     const deleteCard = (card) => {
         setCards(cards => {
@@ -60,11 +63,14 @@ const Maker = ({ authService, FileInput }) => {
             delete updated[card.id];
             return updated;
         })
+        CardRepository.removeCard(userId, card)
     }
 
     useEffect(() => {
         authService.onAuthChange(user => {
-            if (!user) {
+            if (user) {
+                setUserId(user.uid);
+            } else {
                 history.push('/');
             }
         });

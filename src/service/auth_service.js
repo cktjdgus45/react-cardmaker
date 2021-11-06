@@ -1,4 +1,6 @@
 import { initializeApp } from 'firebase/app';
+import firebaseApp from './firebase';
+
 import {
     getAuth,
     signInWithPopup,
@@ -8,14 +10,7 @@ import {
     signOut,
 } from 'firebase/auth';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyAC7jxqGCYQZTP_Li_lSRN3j6TrXYJkb8k",
-    authDomain: "card-c901a.firebaseapp.com",
-    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-    databaseURL: process.env.REACT_APP_DATABASE_URL
-};
-
-const firebaseApp = initializeApp(firebaseConfig);
+const fireBaseApp = firebaseApp;
 
 const auth = getAuth();
 class AuthService {
